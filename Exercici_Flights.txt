@@ -5,14 +5,17 @@ Oriol Esquivias
 
 SELECT count(flightID) FROM Flights;
 
+
 2. Retard promig de sortida i arribada segons l’aeroport origen.
 
 SELECT Origin,AVG(ArrDelay),AVG(DepDelay) FROM Flights GROUP BY Origin;
+
 
 3. Retard promig d’arribada dels vols, per mesos i segons l’aeroport origen. A més,
 volen que els resultat es mostrin de la següent forma (fixa’t en l’ordre de les files):
 
 SELECT Origin,colYear,colMonth,AVG(ArrDelay) FROM Flights GROUP BY Origin,colYear,colMonth ORDER BY Origin,colYear,colMonth;
+
 
 4. Retard promig d’arribada dels vols, per mesos i segons l’aeroport origen (mateixa
 consulta que abans i amb el mateix ordre). Però a més, ara volen que en comptes
@@ -20,15 +23,19 @@ del codi de l’aeroport es mostri el nom de la ciutat.
 
 SELECT USAirports.city,Flights.colYear,Flights.colMonth,AVG(Flights.ArrDelay) FROM USAirports,Flights WHERE Flights.Origin=USAirports.iata GROUP BY USAirports.city,Flights.colYear,Flights.colMonth ORDER BY USAirports.city,Flights.colYear,Flights.colMonth;
 
+SELECT USAirports.city,Flights.colYear,Flights.colMonth,AVG(Flights.ArrDelay) FROM Flights INNER JOIN USAirports ON Flights.Origin=USAirports.iata GROUP BY USAirports.city,Flights.colYear,Flights.colMonth ORDER BY USAirports.city,Flights.colYear,Flights.colMonth;
+
+
 5. Les companyies amb més vols cancelats. A més, han d’estar ordenades de forma
 que les companyies amb més cancelacions apareguin les primeres.
 
-SELECT Carriers.Description AS Company, COUNT(Flights.FlightID) AS Delays FROM Carriers,Flights WHERE Flights.UniqueCarrier=Carriers.CarrierCode GROUP BY Flights.UniqueCarrier ORDER BY COUNT(Flights.FlightID) DESC;
+SELECT Carriers.Description AS Company, COUNT(Flights.FlightID) AS Cancellations FROM Carriers,Flights WHERE Flights.Cancelled != 0 AND Flights.UniqueCarrier=Carriers.CarrierCode GROUP BY Flights.UniqueCarrier ORDER BY COUNT(Flights.FlightID) DESC;
+
 
 6. L’identificador dels 10 avions que més distància han recorregut fent vols.
 
-
 SELECT TailNum, SUM(Distance) AS Dist FROM Flights GROUP BY TailNum HAVING TailNum != "NA" ORDER BY Dist DESC LIMIT 10;
+
 
 7. Companyies amb el seu retard promig només d’aquelles les quals els seus vols
 arriben al seu destí amb un retràs promig major de 10 minuts.
