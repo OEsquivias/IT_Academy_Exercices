@@ -11,8 +11,8 @@ public class Main {
 
 	public static void main(String[] args) {
 //		fase1("Oriol Esquivias");
-//		fase2("Oriol Esquivias");
-		fase3("Oriol Esquivias");
+		fase2("Oriol Esquivias");
+//		fase3("Oriol Esquivias");
 //		fase4("Oriol", "Esquivias");
 
 	}
@@ -29,30 +29,30 @@ public class Main {
 		char[] charName = name2.toCharArray();
 		List<String> lsArrayName = new ArrayList<>();
 		for (char c : charName) {
-			lsArrayName.add(String.valueOf(c));
+			String stringC = String.valueOf(c);
+			lsArrayName.add(stringC);
+			whichChar(stringC);
 		}
-		whichChar(lsArrayName);
+
 	}
 
-	static void whichChar(List<String> name) {
+	static void whichChar(String letter) {
 		Pattern patternVowel = Pattern.compile("[AEIOUaeiou]");
 		Pattern patternConsonant = Pattern.compile("[bcçdfghjklmnñpqrstvwxyzBCÇDFGHJKLMNÑPQRSTVWXYZ]");
 		Pattern patternNumber = Pattern.compile("[0-9]");
 
-		for (String c : name) {
-			Matcher mv = patternVowel.matcher(c);
-			Matcher mc = patternConsonant.matcher(c);
-			Matcher mn = patternNumber.matcher(c);
+		Matcher mv = patternVowel.matcher(letter);
+		Matcher mc = patternConsonant.matcher(letter);
+		Matcher mn = patternNumber.matcher(letter);
 
-			if (mv.matches()) {
-				System.out.println("VOCAL");
-			} else if (mc.matches()) {
-				System.out.println("CONSONANT");
-			} else if (mn.matches()) {
-				System.out.println("Els noms de persones no contenen números");
-			} else {
-				System.out.println("");
-			}
+		if (mv.matches()) {
+			System.out.println("VOCAL");
+		} else if (mc.matches()) {
+			System.out.println("CONSONANT");
+		} else if (mn.matches()) {
+			System.out.println("Els noms de persones no contenen números");
+		} else {
+			System.out.println("");
 		}
 
 	}
@@ -62,6 +62,7 @@ public class Main {
 		String noSpaceName = lowerName.replaceAll("\\s+", "");
 		countLetters(noSpaceName);
 	}
+
 	static void countLetters(String name) {
 		Map<String, Integer> mapName = new HashMap<>();
 		for (int i = 0; i < name.length(); i++) {
